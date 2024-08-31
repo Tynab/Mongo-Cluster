@@ -2,7 +2,6 @@ services:
   mongodb-primary:
     image: bitnami/mongodb:${MONGODB_VERSION}
     container_name: mongodb-primary
-    user: "1001:1001"
     ports:
       - 27017:27017
     environment:
