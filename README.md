@@ -1,2 +1,2 @@
-# Bitnami-Mongo
- Bitnami MongoDB
+# BITNAMI MONGODB
+Bitnami MongoDB with Docker Compose.
