@@ -4,12 +4,13 @@ services:
     container_name: mongodb-primary
     ports:
       - 27017:27017
-    command: --noauth --httpinterface --replSet "rs0" --bind_ip 0.0.0.0
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=${MONGODB_DEFAULT_HOSTS:-}
       - MONGODB_REPLICA_SET_MODE=primary
       - MONGODB_ROOT_PASSWORD=${MONGODB_DEFAULT_PASSWORDS:-}
       - MONGODB_REPLICA_SET_KEY=${MONGODB_DEFAULT_KEYS:-}
+      - MONGODB_ENABLE_JOURNAL=true
+      - MONGODB_ENABLE_IPV6=yes
     volumes:
       - "./data:/bitnami"
     networks:
@@ -21,7 +22,6 @@ services:
     container_name: mongodb-secondary
     ports:
       - 27018:27017
-    command: --noauth --httpinterface --replSet "rs0" --bind_ip 0.0.0.0
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=${MONGODB_DEFAULT_HOSTS:-}
       - MONGODB_REPLICA_SET_MODE=secondary
@@ -29,6 +29,8 @@ services:
       - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=${MONGODB_DEFAULT_PASSWORDS:-}
       - MONGODB_REPLICA_SET_KEY=${MONGODB_DEFAULT_KEYS:-}
+      - MONGODB_ENABLE_JOURNAL=true
+      - MONGODB_ENABLE_IPV6=yes
     networks:
       - yan
     depends_on:
@@ -40,7 +42,6 @@ services:
     container_name: mongodb-arbiter
     ports:
       - 27019:27017
-    command: --noauth --httpinterface --replSet "rs0" --bind_ip 0.0.0.0
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=${MONGODB_DEFAULT_HOSTS:-}
       - MONGODB_REPLICA_SET_MODE=arbiter
@@ -48,6 +49,8 @@ services:
       - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=${MONGODB_DEFAULT_PASSWORDS:-}
       - MONGODB_REPLICA_SET_KEY=${MONGODB_DEFAULT_KEYS:-}
+      - MONGODB_ENABLE_JOURNAL=true
+      - MONGODB_ENABLE_IPV6=yes
     networks:
       - yan
     depends_on:
