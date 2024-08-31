@@ -3,22 +3,24 @@ services:
     image: bitnami/mongodb:${MONGODB_VERSION}
     container_name: mongodb-primary
     user: "1001:1001"
+    ports:
+      - 27017:27017
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=${MONGODB_DEFAULT_HOSTS:-}
       - MONGODB_REPLICA_SET_MODE=primary
       - MONGODB_ROOT_PASSWORD=${MONGODB_DEFAULT_PASSWORDS:-}
       - MONGODB_REPLICA_SET_KEY=${MONGODB_DEFAULT_KEYS:-}
-    ports:
-      - 27017:27017
     volumes:
       - "./data:/bitnami"
+    networks:
+      - yan
     restart: unless-stopped
 
   mongodb-secondary:
     image: bitnami/mongodb:${MONGODB_VERSION}
     container_name: mongodb-secondary
-    depends_on:
-      - mongodb-primary
+    ports:
+      - 27018:27017
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=${MONGODB_DEFAULT_HOSTS:-}
       - MONGODB_REPLICA_SET_MODE=secondary
@@ -26,15 +28,17 @@ services:
       - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=${MONGODB_DEFAULT_PASSWORDS:-}
       - MONGODB_REPLICA_SET_KEY=${MONGODB_DEFAULT_KEYS:-}
-    ports:
-      - 27018:27017
+    networks:
+      - yan
+    depends_on:
+      - mongodb-primary
     restart: unless-stopped
 
   mongodb-arbiter:
     image: bitnami/mongodb:${MONGODB_VERSION}
     container_name: mongodb-arbiter
-    depends_on:
-      - mongodb-primary
+    ports:
+      - 27019:27017
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=${MONGODB_DEFAULT_HOSTS:-}
       - MONGODB_REPLICA_SET_MODE=arbiter
@@ -42,8 +46,10 @@ services:
       - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=${MONGODB_DEFAULT_PASSWORDS:-}
       - MONGODB_REPLICA_SET_KEY=${MONGODB_DEFAULT_KEYS:-}
-    ports:
-      - 27019:27017
+    networks:
+      - yan
+    depends_on:
+      - mongodb-primary
     restart: unless-stopped
 
 networks:
