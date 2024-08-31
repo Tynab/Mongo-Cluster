@@ -4,7 +4,7 @@ services:
     container_name: mongodb-primary
     ports:
       - 27017:27017
-    command: ["--bind_ip_all"]
+    command: --noauth --httpinterface --replSet "rs0" --bind_ip 0.0.0.0
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=${MONGODB_DEFAULT_HOSTS:-}
       - MONGODB_REPLICA_SET_MODE=primary
@@ -21,7 +21,7 @@ services:
     container_name: mongodb-secondary
     ports:
       - 27018:27017
-    command: ["--bind_ip_all"]
+    command: --noauth --httpinterface --replSet "rs0" --bind_ip 0.0.0.0
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=${MONGODB_DEFAULT_HOSTS:-}
       - MONGODB_REPLICA_SET_MODE=secondary
@@ -40,7 +40,7 @@ services:
     container_name: mongodb-arbiter
     ports:
       - 27019:27017
-    command: ["--bind_ip_all"]
+    command: --noauth --httpinterface --replSet "rs0" --bind_ip 0.0.0.0
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=${MONGODB_DEFAULT_HOSTS:-}
       - MONGODB_REPLICA_SET_MODE=arbiter
