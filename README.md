@@ -1,2 +1,2 @@
 # BITNAMI MONGODB
-Bitnami MongoDB with Docker Compose.
+Bitnami MongoDB cluster with Docker Compose.
