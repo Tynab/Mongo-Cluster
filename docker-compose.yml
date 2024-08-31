@@ -9,6 +9,7 @@ services:
       - MONGODB_REPLICA_SET_MODE=primary
       - MONGODB_ROOT_PASSWORD=${MONGODB_DEFAULT_PASSWORDS:-}
       - MONGODB_REPLICA_SET_KEY=${MONGODB_DEFAULT_KEYS:-}
+      - MONGODB_BIND_IP=0.0.0.0
     volumes:
       - "./data:/bitnami"
     networks:
@@ -27,6 +28,7 @@ services:
       - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=${MONGODB_DEFAULT_PASSWORDS:-}
       - MONGODB_REPLICA_SET_KEY=${MONGODB_DEFAULT_KEYS:-}
+      - MONGODB_BIND_IP=0.0.0.0
     networks:
       - yan
     depends_on:
@@ -45,6 +47,7 @@ services:
       - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=${MONGODB_DEFAULT_PASSWORDS:-}
       - MONGODB_REPLICA_SET_KEY=${MONGODB_DEFAULT_KEYS:-}
+      - MONGODB_BIND_IP=0.0.0.0
     networks:
       - yan
     depends_on:
